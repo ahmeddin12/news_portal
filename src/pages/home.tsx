@@ -1,6 +1,6 @@
 import { Box, Typography, Button } from "@mui/material";
 
-import { FC } from "react";
+import type { FC } from "react";
 
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
