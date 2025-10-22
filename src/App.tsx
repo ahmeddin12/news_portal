@@ -1,10 +1,11 @@
 import { Box } from "@mui/material";
+import Navbar from "./components/Navbar";
 
 function App() {
   return (
-    <div className="bg-red-300">
-      <Box>App</Box>
-    </div>
+    <Box>
+      <Navbar />
+    </Box>
   );
 }
 
