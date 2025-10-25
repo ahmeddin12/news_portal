@@ -1,4 +1,4 @@
-import { Box, Typography, Button } from "@mui/material";
+import { Box, Typography, Button, Card } from "@mui/material";
 
 import type { FC } from "react";
 
@@ -28,6 +28,27 @@ const Home: FC = () => {
         See All
         <ArrowForwardIcon sx={{ fontSize: "1.25rem" }} />
       </Box>
+      <Card className="grid grid-cols-2">
+        <Box className="relative h-[360px]">
+          <Box className="bg-red-300 h-full"></Box>
+          <Box
+            className="_carouselGradient"
+            sx={{
+              position: "absolute",
+              bottom: 0,
+              height: "70px",
+              width: "100%",
+            }}
+          ></Box>
+          <Typography
+            sx={{ fontFamily: "serif" }}
+            className="absolute bottom-2 text-white text-[22px] leading-8 line-clamp-3 px-6"
+          >
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          </Typography>
+        </Box>
+      </Card>
     </Box>
   );
 };
