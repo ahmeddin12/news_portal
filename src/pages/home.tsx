@@ -1,4 +1,4 @@
-import { Box, Typography, Button, Card } from "@mui/material";
+import { Box, Typography, Button, Card, CardContent } from "@mui/material";
 
 import type { FC } from "react";
 
@@ -48,6 +48,32 @@ const Home: FC = () => {
             eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </Typography>
         </Box>
+        <CardContent className="relative ">
+          <Typography
+            gutterBottom
+            className="sm:text-xl text-lg font-serif line-clamp-4"
+          >
+            Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+            accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
+            quae ab illo inventore veritatis et quasi architecto beatae vitae
+            dicta sunt explicabo.
+          </Typography>
+          <Typography className="sm:text-xl text-lg font-serif line-clamp-4">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat.
+          </Typography>
+
+          <Box className="md:absolute bottom-2">
+            <Typography className="sm:text-xl text-lg font-serif line-clamp-4">
+              Source: ABC NEWS
+            </Typography>
+            <Typography className="sm:text-xl text-lg font-serif line-clamp-4">
+              Date: 01/04/25
+            </Typography>
+          </Box>
+        </CardContent>
       </Card>
     </Box>
   );
