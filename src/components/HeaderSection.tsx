@@ -20,6 +20,7 @@ const HeaderSection: FC<HeaderSectionProps> = ({ title }) => {
           display: "flex",
           alignItems: "center",
           gap: 1,
+          fontSize: { lg: "1rem", md: "0.875rem", xs: "0.8rem" },
           color: "black",
           "&:hover": {
             textDecoration: "underline",
@@ -28,7 +29,7 @@ const HeaderSection: FC<HeaderSectionProps> = ({ title }) => {
         }}
       />
       See All
-      <ArrowForwardIcon sx={{ fontSize: "1.25rem" }} />
+      <ArrowForwardIcon sx={{ fontSize: "1.25rem", xs: "1rem" }} />
     </Box>
   );
 };
