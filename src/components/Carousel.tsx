@@ -8,11 +8,9 @@ import type { FC } from "react";
 const Carousel: FC = () => {
   return (
     <Box>
-      <Box sx={{ width: "90%", mx: "auto" }}>
-        <HeaderSection />
-        <CarouselCard />
-        <CarouselList />
-      </Box>
+      <HeaderSection title="Top Headlines" />
+      <CarouselCard />
+      <CarouselList />
     </Box>
   );
 };

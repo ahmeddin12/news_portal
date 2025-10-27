@@ -42,7 +42,7 @@ const CarouselCard: FC = () => {
             Source: ABC NEWS
           </Typography>
           <Typography className="sm:text-xl text-lg font-serif line-clamp-4">
-            Date: 05/0725
+            Date: 05/07/25
           </Typography>
         </Box>
       </CardContent>
