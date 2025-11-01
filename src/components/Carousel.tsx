@@ -32,7 +32,7 @@ const Carousel: FC = () => {
     <Box>
       <HeaderSection title="Top Headlines" />
       <CarouselCard topHeadline={topHeadlines[0]} />
-      <CarouselList />
+      <CarouselList topHeadlines={topHeadlines} />
     </Box>
   );
 };

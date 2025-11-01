@@ -8,7 +8,7 @@ interface CarouselCardType {
 
 const CarouselCard: FC<CarouselCardType> = ({ topHeadline }) => {
   return (
-    <Card className="grid grid-cols-2 border-1 shadow-none">
+    <Card className="grid grid-cols-2 border-2 shadow-none">
       <Box className="relative h-[360px]">
         <CardMedia
           component="img"

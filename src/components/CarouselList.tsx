@@ -1,15 +1,25 @@
 import type { FC } from "react";
 import Grid2 from "@mui/material/Grid";
 
-import { Box, Typography, Card } from "@mui/material";
+import type { NewsType } from "../utils/Types";
 
-const CarouselList: FC = () => {
+import { Box, Typography, Card, CardMedia } from "@mui/material";
+
+interface CarouselListProps {
+  topHeadlines: NewsType[];
+}
+
+const CarouselList: FC<CarouselListProps> = ({ topHeadlines }) => {
   return (
-    <Box className="grid xl:grid-cols-5 lg:grid-cols-4 sm:grid-cols-3 grid-cols-2 gap-3 mt-8">
-      {[...Array(4)].map((item, ind) => (
+    <Box className="grid grid-cols-5 gap-3 mt-8">
+      {[...topHeadlines].slice(1, 6).map((item, ind) => (
         <Grid2 key={ind}>
           <Card className="relative">
-            <Box className="bg-red-300 w-full aspect-[16/10]"></Box>
+            <CardMedia
+              component="img"
+              className="w-full aspect-[16/10]"
+              image={item?.urlToImage}
+            ></CardMedia>
             <Box
               className="_carouselGradient"
               sx={{
@@ -19,9 +29,11 @@ const CarouselList: FC = () => {
                 width: "100%",
               }}
             />
-            <Typography className="sm:text-xl text-lg font-serif line-clamp-4">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et
+            <Typography
+              sx={{ fontFamily: "serif" }}
+              className="absolute bottom-2 text-white text-[17px] line-clamp-3 px-3"
+            >
+              {item?.title}
             </Typography>
           </Card>
         </Grid2>
