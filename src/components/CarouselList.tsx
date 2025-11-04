@@ -12,7 +12,7 @@ interface CarouselListProps {
 const CarouselList: FC<CarouselListProps> = ({ topHeadlines }) => {
   return (
     <Box className="grid grid-cols-5 gap-3 mt-8">
-      {[...topHeadlines].slice(1, 6).map((item, ind) => (
+      {[...topHeadlines].slice(0, 5).map((item, ind) => (
         <Grid2 key={ind}>
           <Card className="relative">
             <CardMedia

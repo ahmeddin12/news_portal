@@ -9,7 +9,17 @@ import { useEffect, type FC } from "react";
 import type { NewsType } from "../utils/Types";
 
 const Carousel: FC = () => {
+  const [active, setActive] = useState<number>(0);
   const [topHeadlines, setTopHeadlines] = useState<NewsType[]>([]);
+
+  const toggleActive = (direction: "next" | "prev") => {
+    if (direction === "next") {
+      setActive((prev) => (prev + 1) % topHeadlines.length);
+    }
+    if (direction === "prev") {
+      setActive((prev) => (prev - 1) % topHeadlines.length);
+    }
+  };
   const fetchTopHeadlines = async () => {
     try {
       const response = await axios.get(
@@ -31,7 +41,10 @@ const Carousel: FC = () => {
   return (
     <Box>
       <HeaderSection title="Top Headlines" />
-      <CarouselCard topHeadline={topHeadlines[0]} />
+      <CarouselCard
+        topHeadline={topHeadlines[active]}
+        toggleActive={toggleActive}
+      />
       <CarouselList topHeadlines={topHeadlines} />
     </Box>
   );
