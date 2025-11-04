@@ -1,51 +1,88 @@
-import { useState } from "react";
-import { Box } from "@mui/material";
-import HeaderSection from "./HeaderSection";
-import CarouselCard from "./CarouselCard";
-import CarouselList from "./CarouselList";
-import axios from "axios";
+import { useState, useEffect } from "react";
+import type { FC } from "react";
 
-import { useEffect, type FC } from "react";
+import { Box, Typography } from "@mui/material";
+
+import HeaderSection from "./HeaderSection";
+
+import CarouselList from "./CarouselList";
+import CarouselCard from "./CarouselCard";
+
 import type { NewsType } from "../utils/Types";
+import { getTopHeadlines } from "../utils/api";
+import CarouselCardSkeleton from "./Skeletons/CarouselCardSkeleton";
+import CarouselListSkeleton from "./Skeletons/CarouselListSkeleton";
 
 const Carousel: FC = () => {
   const [active, setActive] = useState<number>(0);
   const [topHeadlines, setTopHeadlines] = useState<NewsType[]>([]);
 
-  const toggleActive = (direction: "next" | "prev") => {
-    if (direction === "next") {
-      setActive((prev) => (prev + 1) % topHeadlines.length);
-    }
-    if (direction === "prev") {
-      setActive((prev) => (prev - 1) % topHeadlines.length);
-    }
-  };
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+
   const fetchTopHeadlines = async () => {
-    try {
-      const response = await axios.get(
-        "https://newsapi.org/v2/top-headlines?country=us&apiKey=d489c3a3f96c4a91a16ce78d50b8ac03"
-      );
-      console.log(response.data.articles[0]);
+    setLoading(true);
+    setError(null);
+
+    const response = await getTopHeadlines();
+    console.log(response);
+
+    if (response.data) {
       const filterHeadlines = response?.data?.articles.filter(
         (res: NewsType) => res.urlToImage != null
       );
 
       setTopHeadlines(filterHeadlines);
-    } catch (error) {
-      console.log(error);
+      setLoading(false);
+    }
+
+    if (response.error) {
+      setError(response.error.message || "Failed To Fetch");
     }
   };
+
+  const toggleActive = (direction: "next" | "prev") => {
+    if (direction === "next") {
+      setActive((prev) => (prev + 1) % topHeadlines.length);
+    } else if (direction === "prev") {
+      setActive((prev) => (prev - 1) % topHeadlines.length);
+    }
+  };
+
   useEffect(() => {
     fetchTopHeadlines();
   }, []);
+
   return (
     <Box>
+      {/* Header */}
       <HeaderSection title="Top Headlines" />
-      <CarouselCard
-        topHeadline={topHeadlines[active]}
-        toggleActive={toggleActive}
-      />
-      <CarouselList topHeadlines={topHeadlines} active={active} />
+
+      {error ? (
+        <Typography color="error" className="">
+          {error}
+        </Typography>
+      ) : (
+        <>
+          {loading ? (
+            <>
+              <CarouselCardSkeleton />
+              <CarouselListSkeleton />
+            </>
+          ) : (
+            <Box>
+              {/* Carousel */}
+              <CarouselCard
+                toggleActive={toggleActive}
+                topHeadline={topHeadlines[active]}
+              />
+
+              {/* CarouselList */}
+              <CarouselList active={active} topHeadlines={topHeadlines} />
+            </Box>
+          )}
+        </>
+      )}
     </Box>
   );
 };
