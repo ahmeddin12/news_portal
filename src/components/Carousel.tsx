@@ -45,7 +45,7 @@ const Carousel: FC = () => {
         topHeadline={topHeadlines[active]}
         toggleActive={toggleActive}
       />
-      <CarouselList topHeadlines={topHeadlines} />
+      <CarouselList topHeadlines={topHeadlines} active={active} />
     </Box>
   );
 };
