@@ -9,11 +9,10 @@ export const getTopHeadlines = async (
   category?: string,
   pageNo?: number
 ): Promise<ApiResponse<NewsApiResponse>> => {
-  //newsapi.org/v2/top-headlines/sources?country=usapiKey=API_KEY
-  //newsapi.org/v2/top-headlines/sources?country=us&apiKey=d489c3a3f96c4a91a16ce78d50b8ac03
-  const url = `${BaseURL}/top-headlines/sources?country=us&apiKey=${apiKey}${
+  const url = `${BaseURL}/top-headlines?country=us&apiKey=${apiKey}${
     category ? `&category=${category}` : ""
   }${pageNo ? `&page=${pageNo}` : ""}`;
+  //newsapi.org/v2/top-headlines?country=us&apiKey=d489c3a3f96c4a91a16ce78d50b8ac03
 
   return await getRequest<NewsApiResponse>(url);
 };

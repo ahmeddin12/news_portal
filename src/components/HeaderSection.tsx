@@ -1,9 +1,8 @@
-import { FC } from "react";
+import type { FC } from "react";
 
 import { Box, Typography, Button } from "@mui/material";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { useNavigate } from "react-router-dom";
-import { categories } from "../utils/constants";
 
 interface HeaderSectionProps {
   title: string;

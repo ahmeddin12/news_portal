@@ -13,9 +13,10 @@ interface CarouselCardType {
 }
 
 const CarouselCard: FC<CarouselCardType> = ({ topHeadline, toggleActive }) => {
+  console.log(topHeadline);
   return (
     <Box className="relative">
-      <Link to={topHeadline.url}>
+      <Link to={topHeadline?.url}>
         <Card className=" grid lg:grid-cols-2 md:grid-cols-3 border-2 shadow-none">
           <Box className="relative md:h-[360px] h-[280px] lg:col-span-1 md:col-span-2">
             <CardMedia

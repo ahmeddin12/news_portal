@@ -34,7 +34,7 @@ const Explore: FC = () => {
     const response = await getTopHeadlines(category, pageNo);
 
     if (response.data) {
-      const filteredNews = response.data.articles.filter(
+      const filteredNews = response?.data?.articles?.filter(
         (res: NewsType) => res.urlToImage != null
       );
 

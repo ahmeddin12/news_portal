@@ -24,7 +24,7 @@ const HomeCardsList: FC<HomeCardsListProps> = ({ category }) => {
     const response = await getTopHeadlines(category);
 
     if (response.data) {
-      const filterCatNews = response?.data?.articles.filter(
+      const filterCatNews = response?.data?.articles?.filter(
         (res: NewsType) => res.urlToImage != null
       );
 
@@ -58,7 +58,7 @@ const HomeCardsList: FC<HomeCardsListProps> = ({ category }) => {
             </Box>
           ) : (
             <Box className="grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-3">
-              {catNews.slice(0, 5).map((item, ind) => (
+              {catNews?.slice(0, 5).map((item, ind) => (
                 <NewsCard key={ind} item={item} />
               ))}
             </Box>

@@ -25,15 +25,16 @@ const Carousel: FC = () => {
     setError(null);
 
     const response = await getTopHeadlines();
-    console.log(response);
+    console.log(await getTopHeadlines());
 
     if (response.data) {
-      const filterHeadlines = response?.data?.articles.filter(
+      const filterHeadlines = response?.data?.articles?.filter(
         (res: NewsType) => res.urlToImage != null
       );
 
       setTopHeadlines(filterHeadlines);
       setLoading(false);
+      console.log(topHeadlines);
     }
 
     if (response.error) {

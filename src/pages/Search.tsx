@@ -24,7 +24,7 @@ const Search: FC = () => {
     console.log(response);
 
     if (response.data) {
-      const filteredNews = response.data.articles.filter(
+      const filteredNews = response?.data?.articles?.filter(
         (res: NewsType) => res.urlToImage != null
       );
 
