@@ -1,4 +1,11 @@
 {
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "moduleResolution": "bundler",
+    "module": "ESNext",
+    "target": "ESNext",
+    "baseUrl": "./src"
+  },
   "files": [],
   "references": [
     { "path": "./tsconfig.app.json" },
