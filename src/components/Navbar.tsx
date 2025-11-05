@@ -6,7 +6,8 @@ import {
   Button,
   ButtonGroup,
 } from "@mui/material";
-import { FC, useState, ChangeEvent, KeyboardEvent } from "react";
+import { useState } from "react";
+import type { FC, ChangeEvent, KeyboardEvent } from "react";
 
 import { categories } from "../utils/constants";
 
