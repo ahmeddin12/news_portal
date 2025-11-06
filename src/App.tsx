@@ -16,17 +16,18 @@ function App() {
       <BrowserRouter>
         <Navbar />
         <Routes>
-          <Box sx={{ width: "90%", mx: "auto" }}>
-            <Carousel />
-            <Box className="mt-4 mb-24">
-              <Box>
-                {categories.map((item: string, ind: number) => (
-                  <HomeCardsList key={ind} category={item} />
-                ))}
+          <Route path="/">
+            <Box sx={{ width: "90%", mx: "auto" }}>
+              <Carousel />
+              <Box className="mt-4 mb-24">
+                <Box>
+                  {categories.map((item: string, ind: number) => (
+                    <HomeCardsList key={ind} category={item} />
+                  ))}
+                </Box>
               </Box>
             </Box>
-          </Box>
-
+          </Route>
           <Route path="/explore" element={<Explore />} />
           <Route path="/search" element={<Search />} />
         </Routes>
