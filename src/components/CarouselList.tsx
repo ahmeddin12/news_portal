@@ -14,7 +14,7 @@ const CarouselList: FC<CarouselListProps> = ({ topHeadlines, active }) => {
   const getNextFive = (active: number, topHeadline: NewsType[]) => {
     const nextFive = [];
 
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 4; i++) {
       const index = (active + i + 1) % topHeadline.length;
       nextFive.push(index);
     }
