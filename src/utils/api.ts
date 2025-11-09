@@ -3,16 +3,13 @@ import { BaseURL } from "./constants";
 import type { ApiResponse } from "./requests";
 import { getRequest } from "./requests";
 
-const apiKey = import.meta.env.VITE_API_KEY;
-
 export const getTopHeadlines = async (
   category?: string,
   pageNo?: number
 ): Promise<ApiResponse<NewsApiResponse>> => {
-  const url = `${BaseURL}/top-headlines?country=us&apiKey=${apiKey}${
-    category ? `&category=${category}` : ""
-  }${pageNo ? `&page=${pageNo}` : ""}`;
-  //newsapi.org/v2/top-headlines?country=us&apiKey=d489c3a3f96c4a91a16ce78d50b8ac03
+  const url = `${BaseURL}/top-headlines?${
+    category ? `category=${category}&` : ""
+  }${pageNo ? `page=${pageNo}&` : ""}country=us`;
 
   return await getRequest<NewsApiResponse>(url);
 };
@@ -21,8 +18,8 @@ export const getByQuery = async (
   query: string,
   pageNo?: number
 ): Promise<ApiResponse<NewsApiResponse>> => {
-  const url = `${BaseURL}/everything?apiKey=${apiKey}${
-    query ? `&q=${query}` : ""
-  }${pageNo ? `&page=${pageNo}` : ""}&pageSize=20`;
+  const url = `${BaseURL}/everything?${
+    query ? `q=${encodeURIComponent(query)}&` : ""
+  }${pageNo ? `page=${pageNo}&` : ""}pageSize=20`;
   return await getRequest<NewsApiResponse>(url);
 };

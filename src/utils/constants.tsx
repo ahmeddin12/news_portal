@@ -1,4 +1,4 @@
-export const BaseURL = `https://newsapi.org/v2`;
+export const BaseURL = `/api/news`;
 
 export const categories: string[] = [
   "Business",

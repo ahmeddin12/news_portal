@@ -1,73 +1,49 @@
-# React + TypeScript + Vite
+# News Portal (React + TypeScript + Vite)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project fetches news from NewsAPI. To work in production (e.g., on Vercel) without CORS errors and without exposing your API key to the browser, it uses a serverless proxy at `/api/news`.
 
-Currently, two official plugins are available:
+## What changed (CORS/426 fix)
+- Added a Vercel Serverless Function: `api/news/[endpoint].ts` that proxies requests to NewsAPI (`top-headlines` and `everything`).
+- The client now calls `/api/news/...` instead of `https://newsapi.org/v2/...`.
+- The serverless function reads the API key from a server env var `NEWS_API_KEY` and injects it server-side.
+- This prevents browser-to-NewsAPI calls (that cause `426 Upgrade Required`/CORS issues on Vercel) and keeps the key secret.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Environment variables
+- On Vercel (Production/Preview): set `NEWS_API_KEY` in Project Settings → Environment Variables.
+- Locally: when using `vercel dev`, create a `.env` (or use Vercel CLI to link/secrets) with:
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+NEWS_API_KEY=your_newsapi_key_here
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Note: The previous `VITE_API_KEY` is no longer used in the client.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Local development
+You have two options:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+1) Vercel Dev (recommended for parity)
+- Install Vercel CLI: `npm i -g vercel`
+- Run Vercel dev server: `vercel dev` (defaults to port 3000)
+- In another terminal, run Vite: `npm run dev`
+- The Vite dev server is configured to proxy `/api` to `http://localhost:3000` (see `vite.config.ts`).
+
+2) Build-time only (no serverless)
+- Not recommended because the NewsAPI key should not be exposed and CORS will block browser requests in production.
+
+## Deployment (Vercel)
+1. Push the repo to GitHub/GitLab/Bitbucket and import into Vercel.
+2. In Vercel Project Settings → Environment Variables, add `NEWS_API_KEY` with your NewsAPI key.
+3. Deploy. The site will call `/api/news/...`, which runs on Vercel Functions.
+
+## Usage in code
+- Base URL for API calls is now `"/api/news"` (see `src/utils/constants.tsx`).
+- `src/utils/api.ts` constructs URLs like:
+  - `GET /api/news/top-headlines?country=us&category=Business&page=2`
+  - `GET /api/news/everything?q=bitcoin&page=1&pageSize=20`
+- The serverless function forwards supported query params and adds the API key on the server.
+
+## Troubleshooting
+- 401 from NewsAPI: verify `NEWS_API_KEY` value and quota.
+- 404 from `/api/news/...`: ensure the path matches `top-headlines` or `everything` and Vercel functions are built.
+- Works locally but fails on Vercel: confirm the env var is set on Vercel and that you redeployed after adding it.
+- CORS/426 again: ensure the frontend calls `/api/...` and not `https://newsapi.org/...` directly.
