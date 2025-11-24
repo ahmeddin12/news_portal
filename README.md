@@ -1,49 +1,81 @@
-# News Portal (React + TypeScript + Vite)
+# News Portal
 
-This project fetches news from NewsAPI. To work in production (e.g., on Vercel) without CORS errors and without exposing your API key to the browser, it uses a serverless proxy at `/api/news`.
+A lightweight news portal front-end built with React + TypeScript and Vite. The project uses MUI for UI components and Axios for HTTP requests. It appears structured as a Vite React app with a separate `api` folder (server or API helpers) and a standard `src` frontend directory.
 
-## What changed (CORS/426 fix)
-- Added a Vercel Serverless Function: `api/news/[endpoint].ts` that proxies requests to NewsAPI (`top-headlines` and `everything`).
-- The client now calls `/api/news/...` instead of `https://newsapi.org/v2/...`.
-- The serverless function reads the API key from a server env var `NEWS_API_KEY` and injects it server-side.
-- This prevents browser-to-NewsAPI calls (that cause `426 Upgrade Required`/CORS issues on Vercel) and keeps the key secret.
+## Quick facts (from repository analysis)
+- Main languages (approx. by bytes):
+  - TypeScript: ~96.1%
+  - JavaScript: ~2.0%
+  - HTML: ~1.6%
+  - CSS: ~0.3%
+- Key dependencies:
+  - React 19, React DOM
+  - React Router DOM
+  - MUI (@mui/material, @mui/icons-material)
+  - axios
+  - @emotion/react, @emotion/styled
+- Build tooling:
+  - Vite, TypeScript, ESLint
 
-## Environment variables
-- On Vercel (Production/Preview): set `NEWS_API_KEY` in Project Settings → Environment Variables.
-- Locally: when using `vercel dev`, create a `.env` (or use Vercel CLI to link/secrets) with:
+## Project status
+This repo appears to be the frontend of a news portal implemented with TypeScript + React and bundled via Vite. You can run, build, and lint the app with the scripts listed below.
 
+## Installation
+Prerequisites:
+- Node.js (>=16 recommended)
+- npm
+
+Install dependencies:
+```bash
+npm install
 ```
-NEWS_API_KEY=your_newsapi_key_here
+
+## Available scripts
+Taken from package.json:
+- npm run dev — start dev server (vite)
+- npm run build — build for production (vite build)
+- npm run preview — preview production build (vite preview)
+- npm run lint — run ESLint
+
+## Run (development)
+```bash
+npm install
+npm run dev
+# open shown localhost URL in browser
 ```
 
-Note: The previous `VITE_API_KEY` is no longer used in the client.
+## Build (production)
+```bash
+npm run build
+npm run preview  # optional to preview the build locally
+```
 
-## Local development
-You have two options:
+## Repository structure (top-level)
+- .gitignore
+- README.md
+- index.html
+- package.json
+- package-lock.json
+- vite.config.ts
+- tsconfig.json / tsconfig.app.json / tsconfig.node.json
+- eslint.config.js
+- api/          — API helpers or backend code (review this folder)
+- public/       — static assets
+- src/          — application source (React + TypeScript)
 
-1) Vercel Dev (recommended for parity)
-- Install Vercel CLI: `npm i -g vercel`
-- Run Vercel dev server: `vercel dev` (defaults to port 3000)
-- In another terminal, run Vite: `npm run dev`
-- The Vite dev server is configured to proxy `/api` to `http://localhost:3000` (see `vite.config.ts`).
+## Notes & suggestions
+- TypeScript is the primary language — keep typings and strictness consistent across the codebase.
+- The project uses MUI v7 and React 19; ensure MUI components are used with their corresponding React APIs.
+- If you have environment variables (API keys, base URLs), add a README section or example `.env.example` to document them.
+- Consider adding CI (GitHub Actions) for linting and building on push/PR.
+- Add a LICENSE file if you want to specify reuse permissions.
 
-2) Build-time only (no serverless)
-- Not recommended because the NewsAPI key should not be exposed and CORS will block browser requests in production.
+## Contributing
+1. Fork the repo
+2. Create a feature branch: git checkout -b feat/my-change
+3. Commit your changes: git commit -m "Add some feature"
+4. Push: git push origin feat/my-change
+5. Open a pull request
 
-## Deployment (Vercel)
-1. Push the repo to GitHub/GitLab/Bitbucket and import into Vercel.
-2. In Vercel Project Settings → Environment Variables, add `NEWS_API_KEY` with your NewsAPI key.
-3. Deploy. The site will call `/api/news/...`, which runs on Vercel Functions.
-
-## Usage in code
-- Base URL for API calls is now `"/api/news"` (see `src/utils/constants.tsx`).
-- `src/utils/api.ts` constructs URLs like:
-  - `GET /api/news/top-headlines?country=us&category=Business&page=2`
-  - `GET /api/news/everything?q=bitcoin&page=1&pageSize=20`
-- The serverless function forwards supported query params and adds the API key on the server.
-
-## Troubleshooting
-- 401 from NewsAPI: verify `NEWS_API_KEY` value and quota.
-- 404 from `/api/news/...`: ensure the path matches `top-headlines` or `everything` and Vercel functions are built.
-- Works locally but fails on Vercel: confirm the env var is set on Vercel and that you redeployed after adding it.
-- CORS/426 again: ensure the frontend calls `/api/...` and not `https://newsapi.org/...` directly.
+## Contact
+For questions or help with the repository, open an issue in the repo or contact the maintainer.
