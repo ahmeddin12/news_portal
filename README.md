@@ -2,12 +2,12 @@
 
 A lightweight news portal front-end built with React + TypeScript and Vite. The project uses MUI for UI components and Axios for HTTP requests. It appears structured as a Vite React app with a separate `api` folder (server or API helpers) and a standard `src` frontend directory.
 
-## Quick facts (from repository analysis)
-- Main languages (approx. by bytes):
-  - TypeScript: ~96.1%
-  - JavaScript: ~2.0%
-  - HTML: ~1.6%
-  - CSS: ~0.3%
+
+- Main languages 
+  - TypeScript
+  - JavaScript
+  - HTML
+  - CSS
 - Key dependencies:
   - React 19, React DOM
   - React Router DOM
